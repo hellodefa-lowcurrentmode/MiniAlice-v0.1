@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL6wczGmyxn"
-#define BLYNK_TEMPLATE_NAME "MiniRobo"
-#define BLYNK_AUTH_TOKEN "W_N0QCcE3j0elUli90VSAF-nKp8e9sJO"
+#define BLYNK_TEMPLATE_ID "XXXXXXXXX"
+#define BLYNK_TEMPLATE_NAME "MiniAlice v0.1"
+#define BLYNK_AUTH_TOKEN "XXXXXX"
 
 #define BLYNK_PRINT Serial
 #include <WiFi.h>
@@ -12,25 +12,11 @@
 #include <Adafruit_SH110X.h>
 #include <FluxGarage_RoboEyes.h>
 
-
-/* #include <BlynkSimpleEsp32.h>
-
 #define BLYNK_PRINT Serial */
 char auth[] = BLYNK_AUTH_TOKEN;
  
-// Your WiFi credentials.
-// Set password to "" for open networks.
-char ssid[] = "BARASANJI V1";
-char pass[] = "Valverde123@";
-
-/* char ssid[] = "HAUS COFFEA";
-char pass[] = "hauskumi"; */
-
-
-//SDA 21, SCL 22;
-/* Uncomment the initialize the I2C address , uncomment only one, If you get a totally blank screen try the other*/
-#define i2c_Address 0x3c //initialize with the I2C addr 0x3C Typically eBay OLED's
-//#define i2c_Address 0x3d //initialize with the I2C addr 0x3D Typically Adafruit OLED's
+char ssid[] = "SSID";
+char pass[] = "PASS";
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -38,7 +24,7 @@ char pass[] = "hauskumi"; */
 
 Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-#define TOUCH_PIN  27       // ubah sesuai pin TTP223
+#define TOUCH_PIN  27       
 #define LONG_PRESS_TIME 1000   // 1000 ms = 1 detik
 #define MESSAGE_DISPLAY_TIME 2000
 
@@ -126,16 +112,6 @@ void showCustomText(String txt)
   display.println("HelloDefa!");
   display.display();
 
-  /* display.clearDisplay();
-  display.setCursor(0, 0);
-  display.setTextSize(2);
-  display.setTextColor(SH110X_WHITE);
-  display.print(txt);
-  display.display();
-
-  textStartTime = millis();
-  textDisplaying = true; */
-
   delay(2000);
 
   
@@ -157,7 +133,6 @@ void showCustomText(String txt)
 // -------------------------------------------------
 void setup() {
 
-
   Serial.begin(115200);
 
   Blynk.begin(auth, ssid, pass);
@@ -167,31 +142,7 @@ void setup() {
   delay(250); // wait for the OLED to power up
 
   display.begin(i2c_Address, true); // Address 0x3C default
-  
-  //BOOT DISPLAY  
- /*  display.clearDisplay();
-  //display.setCursor(x - SCREEN_WIDTH / 2, y - SCREEN_HEIGHT / 2);
-  display.setTextSize(2);
-  display.setTextColor(SH110X_WHITE);
-  display.print("HELLODEFA");
-  display.display(); */
-  //display.setTextColor(SH110X_WHITE);
-  //drawCentreString("HELLODEFA", 13, 12);
-
-  
-
-
-  
-
-  //splashStart = millis();
-
-/* 
-  if (millis() - splashStart >= splashDuration) {
-    display.clearDisplay();
-    roboEyes.setMood(DEFAULT);
-    
-  } */
-      
+ 
   state = IDLE;
   
   roboEyes.begin(SCREEN_WIDTH, SCREEN_HEIGHT, 100);
@@ -208,35 +159,10 @@ void setup() {
 // LOOP (NO DELAY EVER)
 // -------------------------------------------------
 
-//bool splashing = true;
 void loop() {
-
-  /* if (splashing && ((millis() - textStartTime) >= frameDuration))
-  {
-     splashing=false;
-
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setCursor(0, 10);
-  display.println("HelloDefa V0.1 Meet : ");
-  display.setTextSize(2);
-  display.setTextColor(SH110X_WHITE);
-  display.setCursor(10, 25);
-  // Display static text
-  display.println("MiniAlice");
-  display.display();
-  delay(4000);
-  display.clearDisplay();
- 
-
-  } */
 
   roboEyes.update(); 
 
-  
- 
-
-  //Blynk.virtualWrite(V0,weight_In_g);
   Blynk.run();
 
   // VERY IMPORTANT (FPS)
@@ -253,7 +179,6 @@ void loop() {
     roboEyes.setSweat(false);
     roboEyes.setMood(DEFAULT);
     textDisplaying = false;
-    delay(2000);
   }
 
   // ============================================================
@@ -360,7 +285,6 @@ void touchNoticeText(int type){
     }
 
     display.display();
-    delay(2000);
 
     Serial.println("Message Sent !");
 
